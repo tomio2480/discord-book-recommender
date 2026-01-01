@@ -4,7 +4,7 @@
   "description": "選書AI Discord Bot",
   "arguments": {
     "DISCORD_TOKEN": "",
-    "ANTHROPIC_API_KEY": "",
+    "GEMINI_API_KEY": "",
     "GOOGLE_SHEETS_ID": "",
     "GOOGLE_CREDENTIALS_JSON": ""
   },
@@ -39,7 +39,7 @@
                   "secrets": {
                     "variables": {
                       "DISCORD_TOKEN": "${args.DISCORD_TOKEN}",
-                      "ANTHROPIC_API_KEY": "${args.ANTHROPIC_API_KEY}",
+                      "GEMINI_API_KEY": "${args.GEMINI_API_KEY}",
                       "GOOGLE_SHEETS_ID": "${args.GOOGLE_SHEETS_ID}",
                       "GOOGLE_CREDENTIALS_JSON": "${args.GOOGLE_CREDENTIALS_JSON}"
                     }

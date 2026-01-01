@@ -13,8 +13,8 @@ class Book:
 
     title: str
     author: str
-    genre: str = ""
-    pages: int | None = None
+    publisher: str = ""
+    description: str = ""
     is_read: bool = False
     memo: str = ""
 
@@ -60,22 +60,23 @@ class SheetsClient:
 
         books = []
         for record in records:
+            # 削除フラグがあるものはスキップ
+            if record.get("削除フラグ"):
+                continue
+
             title = record.get("タイトル", "")
-            author = record.get("著者", "")
+            author = record.get("著者名", "")
             if not title or not author:
                 continue
 
-            pages_raw = record.get("ページ数", "")
-            pages = int(pages_raw) if pages_raw and str(pages_raw).isdigit() else None
-
-            is_read_raw = record.get("読了", "")
-            is_read = str(is_read_raw).upper() in ("TRUE", "1", "済")
+            is_read_raw = record.get("既読フラグ", "")
+            is_read = bool(is_read_raw)
 
             book = Book(
                 title=title,
                 author=author,
-                genre=record.get("ジャンル", ""),
-                pages=pages,
+                publisher=record.get("出版社", ""),
+                description=record.get("商品説明", ""),
                 is_read=is_read,
                 memo=record.get("メモ", ""),
             )

@@ -42,7 +42,7 @@ Bot:     📚 雨の日にぴったりの5冊、選んでみました！
 | 言語 | Python 3.11+ |
 | Bot フレームワーク | discord.py |
 | Sheets 連携 | gspread |
-| AI | Anthropic Claude API |
+| AI | Google Gemini API |
 | ホスティング | Northflank |
 
 ## 🚀 セットアップ
@@ -78,7 +78,7 @@ python src/main.py
 | 変数名 | 説明 |
 |--------|------|
 | `DISCORD_TOKEN` | Discord Bot トークン |
-| `ANTHROPIC_API_KEY` | Claude API キー |
+| `GEMINI_API_KEY` | Gemini API キー |
 | `GOOGLE_SHEETS_ID` | 本リストのスプレッドシート ID |
 | `GOOGLE_CREDENTIALS_JSON` | サービスアカウント認証情報 (JSON 文字列) |
 

@@ -1,23 +1,23 @@
-"""Claude API を使って本を選書するモジュール。"""
+"""Gemini API を使って本を選書するモジュール。"""
 
-import anthropic
+import google.generativeai as genai
 
 from .sheets import Book
 
 
 class BookSelector:
-    """Claude API を使って本を選書するクラス。"""
+    """Gemini API を使って本を選書するクラス。"""
 
-    MODEL = "claude-sonnet-4-20250514"
-    MAX_TOKENS = 1024
+    MODEL = "gemini-2.0-flash"
 
     def __init__(self, api_key: str) -> None:
         """クライアントを初期化する。
 
         Args:
-            api_key: Anthropic API キー
+            api_key: Gemini API キー
         """
-        self._client = anthropic.Anthropic(api_key=api_key)
+        genai.configure(api_key=api_key)
+        self._model = genai.GenerativeModel(self.MODEL)
 
     def select(self, books: list[Book], request: str) -> str:
         """ユーザーの要望に基づいて本を選書する。
@@ -32,25 +32,20 @@ class BookSelector:
         books_text = self._format_books(books)
         prompt = self._build_prompt(books_text, request)
 
-        message = self._client.messages.create(
-            model=self.MODEL,
-            max_tokens=self.MAX_TOKENS,
-            messages=[{"role": "user", "content": prompt}],
-        )
-
-        return message.content[0].text
+        response = self._model.generate_content(prompt)
+        return response.text
 
     def _format_books(self, books: list[Book]) -> str:
         """本のリストをテキストに整形する。"""
         lines = []
         for book in books:
             parts = [f"『{book.title}』{book.author}"]
-            if book.genre:
-                parts.append(f"[{book.genre}]")
-            if book.pages:
-                parts.append(f"{book.pages}p")
+            if book.publisher:
+                parts.append(f"[{book.publisher}]")
+            if book.description:
+                parts.append(f"({book.description[:100]})")
             if book.memo:
-                parts.append(f"({book.memo})")
+                parts.append(f"メモ: {book.memo}")
             lines.append(" ".join(parts))
         return "\n".join(lines)
 

@@ -24,7 +24,7 @@ def main() -> None:
         credentials_json=config.google_credentials_json,
         sheets_id=config.google_sheets_id,
     )
-    selector = BookSelector(api_key=config.anthropic_api_key)
+    selector = BookSelector(api_key=config.gemini_api_key)
 
     logger.info("Bot を起動しています...")
     bot = BookRecommenderBot(sheets_client=sheets_client, selector=selector)

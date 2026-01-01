@@ -11,7 +11,7 @@ class Config:
     """アプリケーション設定を保持するデータクラス。"""
 
     discord_token: str
-    anthropic_api_key: str
+    gemini_api_key: str
     google_sheets_id: str
     google_credentials_json: str
 
@@ -29,7 +29,7 @@ def load_config() -> Config:
 
     required_vars = [
         "DISCORD_TOKEN",
-        "ANTHROPIC_API_KEY",
+        "GEMINI_API_KEY",
         "GOOGLE_SHEETS_ID",
         "GOOGLE_CREDENTIALS_JSON",
     ]
@@ -40,7 +40,7 @@ def load_config() -> Config:
 
     return Config(
         discord_token=os.environ["DISCORD_TOKEN"],
-        anthropic_api_key=os.environ["ANTHROPIC_API_KEY"],
+        gemini_api_key=os.environ["GEMINI_API_KEY"],
         google_sheets_id=os.environ["GOOGLE_SHEETS_ID"],
         google_credentials_json=os.environ["GOOGLE_CREDENTIALS_JSON"],
     )
