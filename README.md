@@ -135,6 +135,16 @@ Northflank を使用してデプロイする。GitHub 連携を設定すると p
 
 `northflank.json` を使用した GitOps デプロイにも対応している。
 
+fork して使用する場合は、`northflank.json` 内の `projectUrl` を自分のリポジトリ URL に変更すること。
+
+```json
+"vcsData": {
+  "projectUrl": "https://github.com/<your-username>/discord-book-recommender",
+  "projectType": "github",
+  "projectBranch": "main"
+}
+```
+
 ## 📄 ライセンス
 
 MIT License
