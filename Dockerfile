@@ -33,4 +33,4 @@ ENV PATH=/home/appuser/.local/bin:$PATH
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD python -c "print('healthy')" || exit 1
 
-CMD ["python", "src/main.py"]
+CMD ["python", "-m", "src.main"]
