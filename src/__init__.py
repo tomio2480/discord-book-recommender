@@ -1,1 +1,1 @@
-"""xøAI Discord Bot ÑÃ±ü¸"""
+# Book Recommender Bot package
