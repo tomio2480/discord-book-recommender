@@ -61,7 +61,8 @@ class SheetsClient:
         books = []
         for record in records:
             # 削除フラグがあるものはスキップ
-            if record.get("削除フラグ"):
+            delete_flag = record.get("削除フラグ")
+            if delete_flag and str(delete_flag).upper() == "TRUE":
                 continue
 
             title = record.get("タイトル", "")

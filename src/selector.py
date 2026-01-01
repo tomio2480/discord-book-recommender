@@ -8,7 +8,7 @@ from .sheets import Book
 class BookSelector:
     """Gemini API を使って本を選書するクラス。"""
 
-    MODEL = "gemini-2.0-flash"
+    MODEL = "gemini-2.5-flash"
 
     def __init__(self, api_key: str) -> None:
         """クライアントを初期化する。
