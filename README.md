@@ -69,7 +69,7 @@ Libra Mate は書籍管理アプリで、蔵書を Google Sheets に出力でき
 ### 1. リポジトリをクローン
 
 ```bash
-git clone https://github.com/tomio2480/discord-book-recommender.git
+git clone https://github.com/<your-username>/discord-book-recommender.git
 cd discord-book-recommender
 ```
 
@@ -135,7 +135,11 @@ Northflank を使用してデプロイする。GitHub 連携を設定すると p
 
 `northflank.json` を使用した GitOps デプロイにも対応している。
 
-fork して使用する場合は、`northflank.json` 内の `projectUrl` を自分のリポジトリ URL に変更すること。
+fork して使用する場合は、`northflank.json` 内の以下の項目を変更すること。
+
+#### projectUrl（必須）
+
+自分のリポジトリ URL に変更する。
 
 ```json
 "vcsData": {
@@ -144,6 +148,16 @@ fork して使用する場合は、`northflank.json` 内の `projectUrl` を自�
   "projectBranch": "main"
 }
 ```
+
+#### region（任意）
+
+デフォルトは `europe-west`。必要に応じて変更する。
+
+```json
+"region": "europe-west"
+```
+
+利用可能なリージョン: `europe-west`, `us-central`, `asia-southeast`
 
 ## 📄 ライセンス
 
