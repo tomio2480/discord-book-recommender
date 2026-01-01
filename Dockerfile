@@ -4,7 +4,7 @@ FROM python:3.11-slim AS builder
 WORKDIR /app
 
 COPY requirements.txt .
-RUN pip install --no-cache-dir --user -r requirements.txt
+RUN pip install --no-cache-dir --target=/app/packages -r requirements.txt
 
 # Runtime stage
 FROM python:3.11-slim
@@ -15,7 +15,7 @@ WORKDIR /app
 RUN useradd --create-home --shell /bin/bash appuser
 
 # Copy installed packages from builder
-COPY --from=builder /root/.local /home/appuser/.local
+COPY --from=builder /app/packages /app/packages
 
 # Copy source code
 COPY src/ ./src/
@@ -26,8 +26,8 @@ RUN chown -R appuser:appuser /app
 # Switch to non-root user
 USER appuser
 
-# Add local bin to PATH
-ENV PATH=/home/appuser/.local/bin:$PATH
+# Add packages to PYTHONPATH
+ENV PYTHONPATH=/app/packages
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
