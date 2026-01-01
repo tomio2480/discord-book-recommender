@@ -1,0 +1,84 @@
+{
+  "apiVersion": "v1.2",
+  "name": "discord-book-recommender",
+  "description": "選書AI Discord Bot",
+  "arguments": {
+    "DISCORD_TOKEN": "",
+    "ANTHROPIC_API_KEY": "",
+    "GOOGLE_SHEETS_ID": "",
+    "GOOGLE_CREDENTIALS_JSON": ""
+  },
+  "spec": {
+    "kind": "Workflow",
+    "spec": {
+      "type": "sequential",
+      "steps": [
+        {
+          "kind": "Project",
+          "ref": "project",
+          "spec": {
+            "name": "discord-book-recommender",
+            "description": "選書AI Discord Bot",
+            "region": "europe-west"
+          }
+        },
+        {
+          "kind": "Workflow",
+          "spec": {
+            "type": "sequential",
+            "context": {
+              "projectId": "${refs.project.id}"
+            },
+            "steps": [
+              {
+                "kind": "SecretGroup",
+                "ref": "secrets",
+                "spec": {
+                  "name": "bot-secrets",
+                  "secretType": "environment-arguments",
+                  "secrets": {
+                    "variables": {
+                      "DISCORD_TOKEN": "${args.DISCORD_TOKEN}",
+                      "ANTHROPIC_API_KEY": "${args.ANTHROPIC_API_KEY}",
+                      "GOOGLE_SHEETS_ID": "${args.GOOGLE_SHEETS_ID}",
+                      "GOOGLE_CREDENTIALS_JSON": "${args.GOOGLE_CREDENTIALS_JSON}"
+                    }
+                  }
+                }
+              },
+              {
+                "kind": "CombinedService",
+                "ref": "bot-service",
+                "spec": {
+                  "name": "book-recommender-bot",
+                  "billing": {
+                    "deploymentPlan": "nf-compute-10"
+                  },
+                  "deployment": {
+                    "instances": 1
+                  },
+                  "buildConfiguration": {
+                    "dockerfile": {
+                      "dockerFilePath": "/Dockerfile",
+                      "dockerWorkDir": "/"
+                    }
+                  },
+                  "vcsData": {
+                    "projectUrl": "https://github.com/tomio2480/discord-book-recommender",
+                    "projectType": "github",
+                    "projectBranch": "main"
+                  },
+                  "runtimeEnvironment": {
+                    "inheritSecretGroups": [
+                      "${refs.secrets.id}"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
